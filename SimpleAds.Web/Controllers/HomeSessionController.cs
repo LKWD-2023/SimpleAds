@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Http;
 using SimpleAds.Data;
 using SimpleAds.Web.Models;
 using System.Text.Json;
-using System.Text.Json.Serialization;
+using Microsoft.AspNetCore.Identity;
 
 namespace SimpleAds.Web.Controllers
 {
@@ -19,12 +19,12 @@ namespace SimpleAds.Web.Controllers
         public IActionResult Index()
         {
             SimpleAdDb db = new SimpleAdDb(_connectionString);
-            var ads = db.GetAds();
+            List<SimpleAd> databaseAds = db.GetAds();
             var ids = HttpContext.Session.Get<List<int>>("ListingIds");
 
             return View(new HomePageViewModel
             {
-                Ads = ads.Select(ad => new AdViewModel
+                Ads = databaseAds.Select(ad => new AdViewModel
                 {
                     Ad = ad,
                     CanDelete = ids != null && ids.Contains(ad.Id)

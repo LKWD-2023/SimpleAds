@@ -20,7 +20,6 @@ namespace SimpleAds.Data
             command.CommandText = "INSERT INTO Ads (Description, Name, PhoneNumber, DateCreated) " +
                                   "VALUES (@desc, @name, @phone, GETDATE()) SELECT SCOPE_IDENTITY()";
             command.Parameters.AddWithValue("@desc", ad.Description);
-
             object name = ad.Name;
 
             if (name == null)
@@ -80,11 +79,11 @@ namespace SimpleAds.Data
         {
             var ad = new SimpleAd
             {
-                Name = reader.Get<string>("Name"),
-                Description = reader.Get<string>("Description"),
-                Date = reader.Get<DateTime>("DateCreated"),
-                PhoneNumber = reader.Get<string>("PhoneNumber"),
-                Id = reader.Get<int>("Id")
+                Name = reader.GetOrNull<string>("Name"),
+                Description = reader.GetOrNull<string>("Description"),
+                Date = reader.GetOrNull<DateTime>("DateCreated"),
+                PhoneNumber = reader.GetOrNull<string>("PhoneNumber"),
+                Id = reader.GetOrNull<int>("Id")
             };
             return ad;
         }

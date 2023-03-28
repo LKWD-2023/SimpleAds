@@ -5,7 +5,7 @@ namespace SimpleAds.Data
 {
     public static class ReaderExtensions
     {
-        public static T Get<T>(this SqlDataReader reader, string name)
+        public static T GetOrNull<T>(this SqlDataReader reader, string name)
         {
             object value = reader[name];
             if (value == DBNull.Value)
